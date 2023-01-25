@@ -40,19 +40,13 @@ class Renderer(object):
     def render(self):
         output_matrix = viewport.getZeroMatrix()
 
-        for renderObject in self.render_objects:
-            row_num = 0
-            col_num = 0
-            if type(renderObject) is Animation:
-                renderObject.animate()
-                row_num = renderObject.render_object.position[0]
-                col_num = renderObject.render_object.position[1]
-            elif type(renderObject) is RenderObject:
-                row_num = renderObject.position[0]
-                col_num = renderObject.position[1]
-            else:
-              continue
+        for render_object in self.render_objects:
+            if type(render_object) is Animation:
+                render_object.animate()
+                render_object = render_object.render_object
 
+            row_num = render_object.position[0]
+            col_num = render_object.position[1]
             if self.elementExists(row_num, col_num, output_matrix): output_matrix[row_num][col_num] = 1
 
         viewport.show(output_matrix)
