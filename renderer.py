@@ -29,20 +29,20 @@ class Renderer:
         self.viewport = viewport
         self.render_objects = []
 
-    def addRenderObject(self, render_object, animation) -> None:
+    def addRenderObject(self, render_object, animation=None) -> None:
         self.render_objects.append((render_object, animation))
 
     def render(self) -> None:
         output_matrix = self.viewport.getZeroMatrix()
 
         for render_object, animation in self.render_objects:
-            animation.animate(render_object)
+            if animation != None: animation.animate(render_object) # TODO fix when multiple animations on one RenderObject func is added
             render_object.render()
             offset_x, offset_y = render_object.position
             matrix = render_object.shape_matrix
 
             for i in range(len(matrix)):
-                for j in range(len(matrix[0])): #fix when changing shape to set of offsets
+                for j in range(len(matrix[0])): # TODO fix when changing shape to set of offsets
                     if matrix[i][j] == 1:
                         x = i + offset_x
                         y = j + offset_y

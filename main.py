@@ -24,6 +24,9 @@ def main() -> None:
         ]
     heart = RenderObject('heart', heart_shape, (0,0))
 
+    # renderer.addRenderObject(heart) 
+    # #TODO Fix this, position missing, animation should get startposition from RenderObject not other way around
+    
     renderer.addRenderObject(dot, LinearAnimation((-5, 2), viewport.size[1], 2))
     renderer.addRenderObject(heart, LinearAnimation((0, 0), viewport.size[1] + len(heart_shape)))
 
