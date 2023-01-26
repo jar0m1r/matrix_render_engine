@@ -1,49 +1,48 @@
 import time
+import animation
 
 NUM_STRIPS = 5
 NUM_STRIP_LEDS = 12
 
 # The actual matrix to output
-class Viewport(object):
+class Viewport:
 
-    def __init__(self, size):
+    def __init__(self, size) -> None:
         self.size = size
 
-    def getZeroMatrix(self):
+    def getZeroMatrix(self) -> list[list[int]]:
         x, y = self.size
         return [[ (0) for j in range(x)] for i in range(y)]
 
-    def show(self, output_matrix):
+    def show(self, output_matrix) -> None:
         for row in output_matrix:
             for led in row:
                 if led == 0:
                     print(f" {chr(11041)} ", end=" ")
                 else:
                     print(f" {chr(11042)} ", end=" ")
-
             print('\n')
         print('\n\n')
 
 
 
+# Renders RenderObjects to Viewport
+class Renderer:
 
-# Renderer of RenderObjects to the Viewport
-class Renderer(object):
-
-    def __init__(self, viewport):
+    def __init__(self, viewport) -> None:
         self.viewport = viewport
         self.render_objects = []
 
-    def addRenderObject(self, render_object):
+    def addRenderObject(self, render_object) -> None:
         self.render_objects.append(render_object)
 
-    def render(self):
-        output_matrix = viewport.getZeroMatrix()
+    def render(self) -> None:
+        output_matrix = self.viewport.getZeroMatrix()
 
         for render_object in self.render_objects:
 
             # TODO RenderObject and Animation ABC
-            if type(render_object) is Animation:
+            if type(render_object) is animation.Animation:
                 render_object.animate()
                 render_object = render_object.render_object
 
@@ -58,44 +57,27 @@ class Renderer(object):
                         y = j + offset_y
                         if len(output_matrix) > x and len(output_matrix[0]) > y: output_matrix[x][y] = 1
 
-        viewport.show(output_matrix)
+        self.viewport.show(output_matrix)
 
 
 
 
 # Renderable object
-class RenderObject(object):
+class RenderObject:
 
-    def __init__(self, name, shape_matrix, position):
+    def __init__(self, name, shape_matrix, position) -> None:
         self.name = name
         self.shape_matrix = shape_matrix
         self.position = position
 
-    def draw(self):
+    def draw(self) -> tuple[int, int]:
         return (self.shape_matrix, self.position)
         
 
 
 
-
-# Animation able to change position of RenderObject 
-# later make Ankmation base class and different Animation subclasses 
-# like Slide, blink, fade, rotate
-# subclasses are chainable or pipeable
-class Animation(object):
-
-    def __init__(self, render_object):
-        self.render_object = render_object
-
-    def animate(self):
-        y, x = self.render_object.position
-        self.render_object.position = (y, x+1)
-
-
-
-
 # main program
-if __name__ == '__main__':
+def main() -> None:
     print('- - - welcome at the led matrix controls - - -\n')
     viewport = Viewport((NUM_STRIP_LEDS, NUM_STRIPS))
     renderer = Renderer(viewport)
@@ -112,11 +94,13 @@ if __name__ == '__main__':
         ]
     heart = RenderObject('heart', heart_shape, (0,0))
 
-    dot_animation = Animation(dot)
-
-    renderer.addRenderObject(Animation(dot))
-    renderer.addRenderObject(Animation(heart))
+    renderer.addRenderObject(animation.Animation(dot))
+    renderer.addRenderObject(animation.Animation(heart))
 
     while True:
         renderer.render()
         time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
