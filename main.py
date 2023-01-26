@@ -13,7 +13,7 @@ def main() -> None:
     renderer = Renderer(viewport)
 
     dot_shape = [[1]]
-    dot = RenderObject('dot', dot_shape, (0,0))
+    dot = RenderObject('dot', dot_shape, (-5,2))
 
     heart_shape = [
         [0,1,0,1,0],
@@ -27,12 +27,12 @@ def main() -> None:
     # renderer.addRenderObject(heart) 
     # #TODO Fix this, position missing, animation should get startposition from RenderObject not other way around
     
-    renderer.addRenderObject(dot, LinearAnimation((-5, 2), viewport.size[1], 2))
-    renderer.addRenderObject(heart, LinearAnimation((0, 0), viewport.size[1] + len(heart_shape)))
+    renderer.addRenderObject(dot, [LinearAnimation(dot.position, viewport.size[1], 2)])
+    renderer.addRenderObject(heart, [LinearAnimation(heart.position, viewport.size[1] + len(heart_shape))])
 
     while True:
         renderer.render()
-        time.sleep(0.3)
+        time.sleep(0.5)
 
 
 if __name__ == '__main__':

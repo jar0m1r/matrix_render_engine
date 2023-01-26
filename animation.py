@@ -31,4 +31,9 @@ class LinearAnimation(Animation):
 
 # color and intensity animation
 class FadeAnimation(Animation):
-    pass
+    isOn = True
+
+    def animate(self, render_object:RenderObject) -> None:
+        if isOn: render_object.color = 'R'
+        else: render_object.color = 'G'
+        isOn = not isOn

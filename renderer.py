@@ -29,14 +29,15 @@ class Renderer:
         self.viewport = viewport
         self.render_objects = []
 
-    def addRenderObject(self, render_object, animation=None) -> None:
-        self.render_objects.append((render_object, animation))
+    def addRenderObject(self, render_object, animations=[]) -> None:
+        self.render_objects.append((render_object, animations))
 
     def render(self) -> None:
         output_matrix = self.viewport.getZeroMatrix()
 
-        for render_object, animation in self.render_objects:
-            if animation != None: animation.animate(render_object) # TODO fix when multiple animations on one RenderObject func is added
+        for render_object, animations in self.render_objects:
+            for animation in animations:
+                animation.animate(render_object)
             render_object.render()
             offset_x, offset_y = render_object.position
             matrix = render_object.shape_matrix
@@ -58,6 +59,9 @@ class RenderObject:
         self.name = name
         self.shape_matrix = shape_matrix
         self.position = position
+
+        # color will be in tuple on matrix item, for now ..
+        self.color = 'R' # 'R' 'G' 'B' 
 
     def render(self) -> None:
         pass
