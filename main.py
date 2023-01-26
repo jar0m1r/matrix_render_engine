@@ -41,24 +41,24 @@ class Renderer(object):
         output_matrix = viewport.getZeroMatrix()
 
         for render_object in self.render_objects:
+
+            # TODO RenderObject and Animation ABC
             if type(render_object) is Animation:
                 render_object.animate()
                 render_object = render_object.render_object
 
-            row_num = render_object.position[0]
-            col_num = render_object.position[1]
-            if self.elementExists(row_num, col_num, output_matrix): output_matrix[row_num][col_num] = 1
+            # 
+            offset_x, offset_y = render_object.position
+            matrix = render_object.shape_matrix
+
+            for i in range(len(matrix)):
+                for j in range(len(matrix[0])): #fix when changing shape to set of offsets
+                    if matrix[i][j] == 1:
+                        x = i + offset_x
+                        y = j + offset_y
+                        if len(output_matrix) > x and len(output_matrix[0]) > y: output_matrix[x][y] = 1
 
         viewport.show(output_matrix)
-
-    def elementExists(self, row_num, col_num, output_matrix): 
-        if len(output_matrix) < row_num - 1:
-            return False
-        elif len(output_matrix[row_num]) < col_num - 1:
-            return False
-        else:
-            return True
-
 
 
 
@@ -66,13 +66,13 @@ class Renderer(object):
 # Renderable object
 class RenderObject(object):
 
-    def __init__(self, name, shape, position):
+    def __init__(self, name, shape_matrix, position):
         self.name = name
-        self.shape = shape
+        self.shape_matrix = shape_matrix
         self.position = position
 
     def draw(self):
-        return (self.shape, self.position)
+        return (self.shape_matrix, self.position)
         
 
 
@@ -114,8 +114,9 @@ if __name__ == '__main__':
 
     dot_animation = Animation(dot)
 
-    renderer.addRenderObject(dot_animation)
+    renderer.addRenderObject(Animation(dot))
+    renderer.addRenderObject(Animation(heart))
 
     while True:
         renderer.render()
-        time.sleep(2)
+        time.sleep(1)
