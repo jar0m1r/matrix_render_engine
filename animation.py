@@ -1,22 +1,34 @@
 import time
+from renderer import RenderObject
 
-# Animation able to change position of RenderObject 
-# later make Ankmation base class and different Animation subclasses 
-# like Slide, blink, fade, rotate
-# subclasses are chainable or pipeable
+# Animation able to change properties of RenderObject 
+
 class Animation:
 
-    def __init__(self, render_object) -> None:
-        self.render_object = render_object
+    def __init__(self) -> None:
+        pass
 
     def animate(self) -> None:
-        y, x = self.render_object.position
-        self.render_object.position = (y, x+1)
+        pass
 
 # linear from -> to animation in x or y
-class LinearAnimation:
-    pass 
+class LinearAnimation(Animation):
+    
+    def __init__(self, start_position:tuple[int, int], num_steps, velocity=1):
+        self.start_position = start_position
+        self.num_steps = num_steps
+        self.step = 0
+        self.velocity = velocity
+    
+    def animate(self, render_object:RenderObject) -> None:
+        if self.step < self.num_steps:
+            self.step += 1
+            y, x = render_object.position
+            render_object.position = (y, x+self.velocity)
+        else:
+            render_object.position = self.start_position
+            self.step = 0
 
 # color and intensity animation
-class FadeAnimation:
+class FadeAnimation(Animation):
     pass

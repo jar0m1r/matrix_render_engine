@@ -29,20 +29,15 @@ class Renderer:
         self.viewport = viewport
         self.render_objects = []
 
-    def addRenderObject(self, render_object) -> None:
-        self.render_objects.append(render_object)
+    def addRenderObject(self, render_object, animation) -> None:
+        self.render_objects.append((render_object, animation))
 
     def render(self) -> None:
         output_matrix = self.viewport.getZeroMatrix()
 
-        for render_object in self.render_objects:
-
-            # TODO RenderObject and Animation ABC
-            if type(render_object) is Animation:
-                render_object.animate()
-                render_object = render_object.render_object
-
-            # 
+        for render_object, animation in self.render_objects:
+            animation.animate(render_object)
+            render_object.render()
             offset_x, offset_y = render_object.position
             matrix = render_object.shape_matrix
 
@@ -56,8 +51,6 @@ class Renderer:
         self.viewport.show(output_matrix)
 
 
-
-
 # Renderable object
 class RenderObject:
 
@@ -66,7 +59,5 @@ class RenderObject:
         self.shape_matrix = shape_matrix
         self.position = position
 
-    def draw(self) -> tuple[int, int]:
-        return (self.shape_matrix, self.position)
-        
-
+    def render(self) -> None:
+        pass

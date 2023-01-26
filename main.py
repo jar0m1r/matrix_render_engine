@@ -24,12 +24,12 @@ def main() -> None:
         ]
     heart = RenderObject('heart', heart_shape, (0,0))
 
-    renderer.addRenderObject(Animation(dot))
-    renderer.addRenderObject(Animation(heart))
+    renderer.addRenderObject(dot, LinearAnimation((-5, 2), viewport.size[1], 2))
+    renderer.addRenderObject(heart, LinearAnimation((0, 0), viewport.size[1] + len(heart_shape)))
 
     while True:
         renderer.render()
-        time.sleep(1)
+        time.sleep(0.3)
 
 
 if __name__ == '__main__':
