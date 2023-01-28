@@ -1,4 +1,5 @@
 from animation import *
+from shape import Shape
 
 # The actual matrix to output
 class Viewport:
@@ -38,16 +39,15 @@ class Renderer:
         for render_object, animations in self.render_objects:
             for animation in animations:
                 animation.animate(render_object)
+
             render_object.render()
             offset_x, offset_y = render_object.position
-            matrix = render_object.shape_matrix
 
-            for i in range(len(matrix)):
-                for j in range(len(matrix[0])): # TODO fix when changing shape to set of offsets
-                    if matrix[i][j] == 1:
-                        x = i + offset_x
-                        y = j + offset_y
-                        if len(output_matrix) > x and len(output_matrix[0]) > y: output_matrix[x][y] = 1
+            for (x, y), group in render_object.shape.getShapeItems():
+                    if group != 0:
+                        _x = x + offset_x
+                        _y = y + offset_y
+                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = group
 
         self.viewport.show(output_matrix)
 
@@ -55,9 +55,9 @@ class Renderer:
 # Renderable object
 class RenderObject:
 
-    def __init__(self, name, shape_matrix, position) -> None:
+    def __init__(self, name, shape, position) -> None:
         self.name = name
-        self.shape_matrix = shape_matrix
+        self.shape = shape
         self.position = position
 
         # color will be in tuple on matrix item, for now ..
