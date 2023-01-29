@@ -26,7 +26,7 @@ def main() -> None:
     heart = RenderObject('heart', heart_shape, (0,0))
 
     renderer.addRenderObject(dot, [LinearAnimation(dot.position, viewport.size[1], 2)])
-    # renderer.addRenderObject(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0])])
+    renderer.addRenderObject(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0])])
 
     while True:
         renderer.render()
