@@ -66,7 +66,7 @@ class Renderer:
             render_object.render()
             offset_x, offset_y = render_object.position
 
-            for (x, y), group in render_object.shape.shape_items:
+            for (x, y), group, color in render_object.shape.shape_items:
                     if group != 0:
                         _x = x + offset_x
                         _y = y + offset_y
@@ -77,7 +77,7 @@ class Renderer:
 
 class RenderObject():
 
-    def __init__(self, name, shape, position) -> None:
+    def __init__(self, name:str, shape:Shape, position:tuple[int, int]) -> None:
         self.name = name
         self.shape = shape
         self.position = position
