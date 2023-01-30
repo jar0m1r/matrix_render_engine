@@ -10,7 +10,7 @@ NUM_STRIP_LEDS = 12
 # main program
 def main() -> None:
     print('- - - welcome at the led matrix controls - - -\n')
-    viewport = Viewport((NUM_STRIP_LEDS, NUM_STRIPS))
+    viewport = Terminal((NUM_STRIP_LEDS, NUM_STRIPS))
     renderer = Renderer(viewport)
 
     dot_shape = Shape.fromMatrix([[1]])
@@ -25,8 +25,8 @@ def main() -> None:
         ])
     heart = RenderObject('heart', heart_shape, (0,0))
 
-    renderer.addRenderObject(dot, [LinearAnimation(dot.position, viewport.size[1], 2)])
-    renderer.addRenderObject(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0])])
+    renderer.add_render_object(dot, [LinearAnimation(dot.position, viewport.size[1], 2)])
+    renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0])])
 
     while True:
         renderer.render()

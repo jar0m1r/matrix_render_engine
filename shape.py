@@ -7,23 +7,23 @@ class Shape:
     def __init__(self):
         self._shape_items = []
 
-    # group 1 always outline
-    def addShapeItem(self, offset, group):
-        self._shape_items.append((offset, group))
-
-    def getShapeItems(self):
+    @property
+    def shape_items(self):
         return self._shape_items
+    
+    # group 1 always outline
+    def add_shape_item(self, offset, group):
+        self._shape_items.append((offset, group))
     
     # translate matrix to coordinate tuples, return new object
     @classmethod
     def fromMatrix(cls, matrix: list[list[int]]): # how to declare return value of Shape instance
         shape = cls()
-        print(f"items id: {id(shape._shape_items)}")
         shape.dimension = (len(matrix), len(matrix[0]))
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 if matrix[i][j] != 0:
-                    shape.addShapeItem((i, j), matrix[i][j])
+                    shape.add_shape_item((i, j), matrix[i][j])
         return shape
 
 # [0,1,0,1,0],

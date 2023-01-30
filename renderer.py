@@ -3,14 +3,35 @@ from shape import Shape
 
 # The actual matrix to output
 class Viewport:
+    _size:tuple[int,int]
 
     def __init__(self, size) -> None:
-        self.size = size
+        self._size = size
 
-    def getZeroMatrix(self) -> list[list[int]]:
-        x, y = self.size
+    @property
+    def size(self):
+        return self._size
+
+    @property
+    def zero_matrix(self) -> list[list[int]]:
+        x, y = self._size
         return [[ (0) for j in range(x)] for i in range(y)]
 
+    def show(self, output_matrix) -> None:
+        pass
+
+class Ledmatrix(Viewport):
+    def show(self, output_matrix) -> None:
+        for row in output_matrix:
+            for led in row:
+                if led == 0:
+                    print(f" {chr(11041)} ", end=" ")
+                else:
+                    print(f" {chr(11042)} ", end=" ")
+            print('\n')
+        print('\n\n')
+
+class Terminal(Viewport):
     def show(self, output_matrix) -> None:
         for row in output_matrix:
             for led in row:
@@ -22,7 +43,6 @@ class Viewport:
         print('\n\n')
 
 
-
 # Renders RenderObjects to Viewport
 class Renderer:
 
@@ -30,11 +50,11 @@ class Renderer:
         self.viewport = viewport
         self.render_objects = []
 
-    def addRenderObject(self, render_object, animations=[]) -> None:
+    def add_render_object(self, render_object, animations=[]) -> None:
         self.render_objects.append((render_object, animations))
 
     def render(self) -> None:
-        output_matrix = self.viewport.getZeroMatrix()
+        output_matrix = self.viewport.zero_matrix
 
         for render_object, animations in self.render_objects:
             for animation in animations:
@@ -43,7 +63,7 @@ class Renderer:
             render_object.render()
             offset_x, offset_y = render_object.position
 
-            for (x, y), group in render_object.shape.getShapeItems():
+            for (x, y), group in render_object.shape.shape_items:
                     if group != 0:
                         _x = x + offset_x
                         _y = y + offset_y
@@ -52,8 +72,7 @@ class Renderer:
         self.viewport.show(output_matrix)
 
 
-# Renderable object
-class RenderObject:
+class RenderObject():
 
     def __init__(self, name, shape, position) -> None:
         self.name = name
