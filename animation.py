@@ -59,7 +59,7 @@ class RainbowAnimation(Animation):
             for i in range(len(render_object.shape.shape_items)):
                 render_object.shape.shape_items[i] = (render_object.shape.shape_items[i][0], 
                                                       render_object.shape.shape_items[i][1], 
-                                                      self.color_columns[render_object.shape.shape_items[i][0][1]-1])
+                                                      self.color_columns[render_object.shape.shape_items[i][0][1]])
                 
         if self.color_value + self.speed > 255: 
             self.color_value = 0
