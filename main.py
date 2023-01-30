@@ -25,8 +25,17 @@ def main() -> None:
         ])
     heart = RenderObject('heart', heart_shape, (0,0))
 
-    renderer.add_render_object(dot, [LinearAnimation(dot.position, viewport.size[1], 2)])
-    renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0])])
+    smiley_shape = Shape.fromMatrix([
+        [0,0,1,1,0,0],
+        [0,1,0,0,1,0],
+        [1,0,1,1,0,1],
+        [0,1,0,0,1,0],
+        [0,0,1,1,0,0]
+        ])
+    smiley = RenderObject('smiley', smiley_shape, (-5,0))
+
+    renderer.add_render_object(smiley, [LinearAnimation(smiley.position, viewport.size[1], 2), FadeAnimation()])
+    # renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0]), FadeAnimation()])
 
     while True:
         renderer.render()

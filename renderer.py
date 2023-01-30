@@ -21,15 +21,7 @@ class Viewport:
         pass
 
 class Ledmatrix(Viewport):
-    def show(self, output_matrix) -> None:
-        for row in output_matrix:
-            for led in row:
-                if led == 0:
-                    print(f" {chr(11041)} ", end=" ")
-                else:
-                    print(f" {chr(11042)} ", end=" ")
-            print('\n')
-        print('\n\n')
+    pass
 
 class Terminal(Viewport):
     def show(self, output_matrix) -> None:
@@ -38,7 +30,18 @@ class Terminal(Viewport):
                 if led == 0:
                     print(f" {chr(11041)} ", end=" ")
                 else:
-                    print(f" {chr(11042)} ", end=" ")
+                    group, color = led
+                    if group == 1:
+                        if color == (255,0,0):
+                            print(f" {chr(11042)} ", end=" ")
+                        elif color == (0,255,0):
+                            print(f" {chr(11045)} ", end=" ")
+                        elif color == (0,0,255):
+                            print(f" {chr(11054)} ", end=" ")
+                        else:
+                            print(f" {chr(11053)} ", end=" ")
+                    else:
+                        pass
             print('\n')
         print('\n\n')
 
@@ -67,7 +70,7 @@ class Renderer:
                     if group != 0:
                         _x = x + offset_x
                         _y = y + offset_y
-                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = group
+                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = (group, render_object.color)
 
         self.viewport.show(output_matrix)
 
@@ -80,7 +83,7 @@ class RenderObject():
         self.position = position
 
         # color will be in tuple on matrix item, for now ..
-        self.color = 'R' # 'R' 'G' 'B' 
+        self.color = (0,0,255) 
 
     def render(self) -> None:
         pass

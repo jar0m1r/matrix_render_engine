@@ -34,6 +34,6 @@ class FadeAnimation(Animation):
     isOn = True
 
     def animate(self, render_object:RenderObject) -> None:
-        if isOn: render_object.color = 'R'
-        else: render_object.color = 'G'
-        isOn = not isOn
+        if self.isOn: render_object.color = (255,0,0)
+        else: render_object.color = (0,0,255)
+        self.isOn = not self.isOn
