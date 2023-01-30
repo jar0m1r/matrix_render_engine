@@ -28,4 +28,4 @@ def colorwheel(color_value):
         r = int(color_value * 3)
         g = 0
         b = int(255 - color_value * 3)
-    return r << 16 | g << 8 | b
+    return (r,g,b)

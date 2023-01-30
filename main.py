@@ -31,7 +31,7 @@ def main() -> None:
     
     outline = RenderObject('outline', outline_shape, (0,0))
 
-    renderer.add_render_object(outline, [RainbowAnimation('LR', outline.shape.dimension[0], 1)])
+    renderer.add_render_object(outline, [RainbowAnimation('LR', outline.shape.dimension[1], 10)])
     # renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1], 2), FadeAnimation()])                                   
     # renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0]), FadeAnimation()])
 

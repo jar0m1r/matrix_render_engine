@@ -31,12 +31,13 @@ class Terminal(Viewport):
                     print(f" {chr(11041)} ", end=" ")
                 else:
                     group, color = led
+                    r,g,b = color
                     if group == 1:
-                        if color == (255,0,0):
+                        if r > g and r > b:
                             print(f" {chr(11042)} ", end=" ")
-                        elif color == (0,255,0):
+                        elif g > r and g > b:
                             print(f" {chr(11045)} ", end=" ")
-                        elif color == (0,0,255):
+                        elif b > r and b > g:
                             print(f" {chr(11054)} ", end=" ")
                         else:
                             print(f" {chr(11053)} ", end=" ")
@@ -70,7 +71,7 @@ class Renderer:
                     if group != 0:
                         _x = x + offset_x
                         _y = y + offset_y
-                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = (group, render_object.color)
+                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = (group, color)
 
         self.viewport.show(output_matrix)
 

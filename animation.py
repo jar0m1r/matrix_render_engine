@@ -50,18 +50,18 @@ class RainbowAnimation(Animation):
         self.color_columns = [(0,0,0) for i in range(width)]
 
     def animate(self, render_object:RenderObject) -> None:
-        if self.color_value + self.speed > 255: 
-            self.color_value = 0
-        else:
-            self.color_value += self.speed
-
         color = colorwheel(self.color_value)
 
         self.color_columns.pop()
         self.color_columns.insert(0, (color))
 
-        print(f'these are the color columns: {self.color_columns}')
-
         if self.direction == 'LR':
-            for item in render_object.shape.shape_items:
-                item = (item[0], item[1], self.color_columns[item[0][0]])
+            for i in range(len(render_object.shape.shape_items)):
+                render_object.shape.shape_items[i] = (render_object.shape.shape_items[i][0], 
+                                                      render_object.shape.shape_items[i][1], 
+                                                      self.color_columns[render_object.shape.shape_items[i][0][1]-1])
+                
+        if self.color_value + self.speed > 255: 
+            self.color_value = 0
+        else:
+            self.color_value += self.speed
