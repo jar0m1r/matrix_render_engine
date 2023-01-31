@@ -65,3 +65,19 @@ class RainbowAnimation(Animation):
             self.color_value = 0
         else:
             self.color_value += self.speed
+
+# tickertape
+class LoopAnimation(Animation):
+    pass
+
+# maybe better as PatternShape(Shape) vs Single Shape
+class PatternAnimation(Animation):
+    pass
+
+# Normal (Shape on/off) and Inverted (shape on <-> Inverted shape off)
+class BlinkAnimation(Animation):
+    pass
+
+# SlideIn / SlideOut
+class SlideAnimation(Animation):
+    pass

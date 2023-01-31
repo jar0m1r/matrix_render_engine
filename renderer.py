@@ -66,12 +66,19 @@ class Renderer:
 
             render_object.render()
             offset_x, offset_y = render_object.position
+            
+            # if render_object.name == 'heart': 
+            #     print(f"{render_object.position}")
+            #     print(f"{render_object.name} - {render_object.shape.shape_items}")
 
             for (x, y), group, color in render_object.shape.shape_items:
                     if group != 0:
                         _x = x + offset_x
                         _y = y + offset_y
-                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: output_matrix[_x][_y] = (group, color)
+                        if len(output_matrix) > _x and len(output_matrix[0]) > _y: 
+                            output_matrix[_x][_y] = (group, color)
+                        # else:
+                        #     print(f"{render_object.name} - {_x}, {_y}")
 
         self.viewport.show(output_matrix)
 
