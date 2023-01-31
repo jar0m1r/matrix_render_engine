@@ -1,6 +1,6 @@
 import time
-from renderer import Renderable, RenderObject
-from color import colorwheel
+from renderer import Renderable, RenderObject, Offset
+from color import Color, colorwheel
 
 # Animation ABC implementing Renderable 
 class Animation(Renderable):
@@ -15,7 +15,7 @@ class Animation(Renderable):
 # linear from -> to animation in x or y
 class LinearAnimation(Animation):
     
-    def __init__(self, start_position:tuple[int, int], num_steps, velocity, renderable:Renderable):
+    def __init__(self, start_position:Offset, num_steps:int, velocity:int, renderable:Renderable):
         super().__init__(renderable)
         self.start_position = start_position
         self.num_steps = num_steps
@@ -33,21 +33,11 @@ class LinearAnimation(Animation):
             self.step = 0
         return render_object
 
-# color and intensity animation
+# color/intensity fade in/out
 class FadeAnimation(Animation):
-    isOn = True
+    pass
 
-    def __init__(self, renderable:Renderable):
-        super().__init__(renderable)
-
-    def render(self) -> RenderObject:
-        render_object = super().render()
-        if self.isOn: render_object.color = (255,0,0)
-        else: render_object.color = (0,0,255)
-        self.isOn = not self.isOn
-        return render_object
-
-
+# LeftRight (LR) TopDown(TD) BottomUp (BU) RightLeft (RL) scroll animation
 class RainbowAnimation(Animation):
 
     def __init__(self, direction:str, width:int, speed:int, renderable:Renderable): # change direction to class or enum / width for now, refactor decorator
@@ -56,7 +46,7 @@ class RainbowAnimation(Animation):
         self.direction = direction
         self.width = width
         self.speed = speed
-        self.color_columns = [(0,0,0) for i in range(width)]
+        self.color_columns = [Color(0,0,0) for i in range(width)]
 
     def render(self) -> RenderObject:
         render_object = super().render()
@@ -88,7 +78,17 @@ class PatternAnimation(Animation):
 
 # Normal (Shape on/off) and Inverted (shape on <-> Inverted shape off)
 class BlinkAnimation(Animation):
-    pass
+    isOn = True
+
+    def __init__(self, renderable:Renderable):
+        super().__init__(renderable)
+
+    def render(self) -> RenderObject:
+        render_object = super().render()
+        if self.isOn: render_object.color = Color(255,0,0)
+        else: render_object.color = Color(0,0,255)
+        self.isOn = not self.isOn
+        return render_object
 
 # SlideIn / SlideOut
 class SlideAnimation(Animation):

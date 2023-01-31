@@ -13,16 +13,16 @@ def main() -> None:
     viewport = Terminal((NUM_STRIP_LEDS, NUM_STRIPS))
     renderer = Renderer(viewport)
 
-    # dot_shape = Shape.fromMatrix([[1]])
-    # dot = RenderObject('dot', dot_shape, (-5,2))
-    # renderer.add_render_object(heart, [LinearAnimation(heart.position, viewport.size[1] + heart_shape.dimension[0]), FadeAnimation()])
+    # dot_shape = Shape.from_matrix([[1]])
+    # dot = RenderObject('dot', dot_shape, (0,-2))
+    # renderer.add_renderable(LinearAnimation(dot.position, viewport.size[1] + dot_shape.dimension[0], 1, BlinkAnimation(dot)))
 
-    outline_matrix = [[1] * NUM_STRIP_LEDS for j in range(NUM_STRIPS)]
-    outline_shape = Shape.fromMatrix(outline_matrix)   
-    outline = RenderObject('outline', outline_shape, (0,0))
-    renderer.add_renderable(RainbowAnimation('LR', outline.shape.dimension[1], 10, outline))
+    # outline_matrix = [[1] * NUM_STRIP_LEDS for j in range(NUM_STRIPS)]
+    # outline_shape = Shape.from_matrix(outline_matrix)   
+    # outline = RenderObject('outline', outline_shape, (0,0))
+    # renderer.add_renderable(RainbowAnimation('LR', outline.shape.dimension[1], 10, outline))
 
-    heart_shape = Shape.fromMatrix([
+    heart_shape = Shape.from_matrix([
         [0,1,0,1,0],
         [1,0,1,0,1],
         [1,0,0,0,1],
@@ -30,7 +30,7 @@ def main() -> None:
         [0,0,1,0,0],
         ])
     heart = RenderObject('heart', heart_shape, (0,-5))
-    renderer.add_renderable(LinearAnimation(heart.position, viewport.size[1], 2, FadeAnimation(heart)))
+    renderer.add_renderable(LinearAnimation(heart.position, viewport.size[1], 2, RainbowAnimation('LR', heart.shape.dimension[1], 10, heart)))
 
 
     while True:

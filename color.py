@@ -1,7 +1,9 @@
+from typing import NamedTuple
+
+Color = NamedTuple('Color', [('r',int),('g',int),('b',int)])
+
 # SPDX-FileCopyrightText: 2021 Melissa LeBlanc-Williams for Adafruit Industries
-#
 # SPDX-License-Identifier: MIT
-# Author(s): Kattni Rembor, Carter Nelson
 def colorwheel(color_value):
     """
     A colorwheel. ``0`` and ``255`` are red, ``85`` is green, and ``170`` is blue, with the values
@@ -28,4 +30,4 @@ def colorwheel(color_value):
         r = int(color_value * 3)
         g = 0
         b = int(255 - color_value * 3)
-    return (r,g,b)
+    return Color(r,g,b)
