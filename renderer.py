@@ -1,3 +1,4 @@
+from __future__ import annotations
 from animation import *
 from shape import Shape
 
@@ -52,19 +53,16 @@ class Renderer:
 
     def __init__(self, viewport) -> None:
         self.viewport = viewport
-        self.render_objects = []
+        self.renderables = []
 
-    def add_render_object(self, render_object, animations=[]) -> None:
-        self.render_objects.append((render_object, animations))
+    def add_renderable(self, renderable) -> None:
+        self.renderables.append(renderable)
 
     def render(self) -> None:
         output_matrix = self.viewport.zero_matrix
 
-        for render_object, animations in self.render_objects:
-            for animation in animations:
-                animation.animate(render_object)
-
-            render_object.render()
+        for renderable in self.renderables:
+            render_object = renderable.render()
             offset_x, offset_y = render_object.position
             
             # if render_object.name == 'heart': 
@@ -83,7 +81,11 @@ class Renderer:
         self.viewport.show(output_matrix)
 
 
-class RenderObject():
+class Renderable:
+    def render() -> RenderObject:
+        pass
+
+class RenderObject(Renderable):
 
     def __init__(self, name:str, shape:Shape, position:tuple[int, int]) -> None:
         self.name = name
@@ -93,5 +95,5 @@ class RenderObject():
         # color will be in tuple on matrix item, for now ..
         self.color = (0,0,255) 
 
-    def render(self) -> None:
-        pass
+    def render(self) -> RenderObject:
+        return self
