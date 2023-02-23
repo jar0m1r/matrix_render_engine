@@ -1,6 +1,6 @@
 import time
-from renderer import Renderable, RenderObject, Offset
-from color import Color, colorwheel
+from .renderer import Renderable, RenderObject, Offset
+from .color import Color, colorwheel
 
 # Animation ABC implementing Renderable 
 class Animation(Renderable):

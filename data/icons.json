@@ -1,0 +1,38 @@
+[
+    {
+        "id": "i_001_0001",
+        "name": "dot",
+        "tags": ["abc", "small"],
+        "shape": ""
+    },
+    {
+        "id": "i_001_0002",
+        "name": "heart",
+        "tags": ["shape", "cute", "medium"],
+        "shape": ""
+    },
+    {
+        "id": "i_001_0003",
+        "name": "cross",
+        "tags": ["shape", "medium"],
+        "shape": ""
+    },
+    {
+        "id": "i_001_0004",
+        "name": "circle",
+        "tags": ["shape", "medium"],
+        "shape": ""
+    },
+    {
+        "id": "i_001_0005",
+        "name": "square",
+        "tags": ["shape", "small"],
+        "shape": ""
+    },
+    {
+        "id": "i_001_0006",
+        "name": "b",
+        "tags": ["abc", "letter"],
+        "shape": ""
+    }
+]

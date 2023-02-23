@@ -1,0 +1,7 @@
+setuptools
+fastapi
+pydantic
+uvicorn
+watchfiles
+psycopg2-binary
+debugpy

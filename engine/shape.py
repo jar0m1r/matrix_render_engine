@@ -1,5 +1,5 @@
 from typing import NamedTuple
-from color import Color
+from .color import Color
 
 ShapeItem = NamedTuple('ShapeItem', [('offset', tuple[int,int]), ('group', int), ('color',Color)])
 
