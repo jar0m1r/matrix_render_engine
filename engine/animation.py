@@ -1,10 +1,12 @@
 import time
+
+from engine.shape import ShapeItem
 from .renderer import Renderable, RenderObject, Offset
 from .color import Color, colorwheel
 
 # Animation ABC implementing Renderable 
 class Animation(Renderable):
-    _renderable:Renderable = None
+    _renderable:Renderable
 
     def __init__(self, renderable:Renderable):
         self._renderable = renderable
@@ -27,7 +29,7 @@ class LinearAnimation(Animation):
         if self.step < self.num_steps:
             self.step += 1
             y, x = render_object.position
-            render_object.position = (y, x+self.velocity)
+            render_object.position = Offset(y, x+self.velocity)
         else:
             render_object.position = self.start_position
             self.step = 0
@@ -57,7 +59,7 @@ class RainbowAnimation(Animation):
 
         if self.direction == 'LR':
             for i in range(len(render_object.shape.shape_items)):
-                render_object.shape.shape_items[i] = (render_object.shape.shape_items[i][0], 
+                render_object.shape.shape_items[i] = ShapeItem(render_object.shape.shape_items[i][0], 
                                                       render_object.shape.shape_items[i][1], 
                                                       self.color_columns[render_object.shape.shape_items[i][0][1]])
                 

@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import NamedTuple
 from .animation import *
 from .shape import Shape
+from abc import ABC, abstractmethod
 
 Offset = NamedTuple('Offset', [('x',int), ('y',int)])
 Size = NamedTuple('Size', [('h',int), ('w',int)])
@@ -53,9 +54,10 @@ class Renderer:
         self.viewport.show(output_matrix)
 
 
-class Renderable:
-    def render() -> RenderObject:
-        pass
+class Renderable(ABC):
+    @abstractmethod
+    def render(self) -> RenderObject:
+        raise NotImplementedError()
 
 class RenderObject(Renderable):
 
@@ -63,7 +65,7 @@ class RenderObject(Renderable):
         self.name = name
         self.shape = shape
         self.position = position
-        self.color = (0,0,255) 
+        self.color = Color(0,0,255) 
 
     def render(self) -> RenderObject:
         return self
